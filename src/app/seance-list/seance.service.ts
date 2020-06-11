@@ -22,8 +22,8 @@ constructor(private httpClient: HttpClient) { }
     return this.httpClient.post<Seance>(`${apiUrl}/seances`, seance);
   }
 
-  deleteSeance(seanceId: number): void {
-    this.httpClient.delete(`${apiUrl}/seances/${seanceId}`);
+  deleteSeance(seanceId: number): Observable<{}> {
+    return this.httpClient.delete(`${apiUrl}/seances/${seanceId}`);
   }
 
   updateOnSeanceChanged(): void {

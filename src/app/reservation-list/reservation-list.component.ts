@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Reservation} from './reservation.model';
+import {ReservationService} from './reservation.service';
+import {MatTableDataSource} from '@angular/material';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-reservation-list',
@@ -7,11 +11,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReservationListComponent implements OnInit {
 
-  displayedColumns = ['title', 'duration', 'yearOfProduction'];
+  dataSource: MatTableDataSource<Reservation>;
+  componentDestroyed$: Subject<boolean> = new Subject<boolean>();
+  displayedColumns = ['seanceTime', 'lastName', 'firstName', 'numberOfPlaces', 'options'];
+  editedReservation: Reservation;
 
-  constructor() { }
+  constructor(private reservationService: ReservationService) { }
 
   ngOnInit() {
   }
+
+  editElement(reservation: Reservation): void {
+    this.editedReservation = reservation;
+  }
+
+  removeElement(reservationId): void {
+    this.reservationService.deleteReservation(reservationId);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 
 }

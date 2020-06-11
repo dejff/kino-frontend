@@ -24,8 +24,8 @@ export class MovieService {
     return this.httpClient.post<Movie>(`${apiUrl}/movies`, movie);
   }
 
-  deleteMovie(movieId: number): void {
-    this.httpClient.delete(`${apiUrl}/movies/${movieId}`);
+  deleteMovie(movieId: number): Observable<{}> {
+    return this.httpClient.delete(`${apiUrl}/movies/${movieId}`);
   }
 
   updateOnMovieChanged(): void {

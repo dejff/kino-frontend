@@ -1,1 +1,36 @@
-<h1>Seanse</h1>
+<form [formGroup]="seanceForm">
+  <div class="room-input">
+    <mat-form-field>
+      <mat-label>Sala</mat-label>
+      <input type="text" formControlName="noOfRoom" matInput>
+      <mat-error>Wybierz salę</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="hour-start-input">
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker"
+             placeholder="Wybierz termin seansu"
+             [formControl]="hourOfStart">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSeconds]="false"
+                               [enableMeridian]="false"
+                               [disableMinute]="false" [hideTime]="false">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+  <div class="movie-input">
+    <mat-form-field>
+      <mat-label>Film</mat-label>
+      <mat-select formControlName="movie">
+        <mat-option *ngFor="let movie of availableMovies" [value]="movie">
+          {{movie.title}} ({{movie.yearOfProduction}})
+        </mat-option>
+      </mat-select>
+      <mat-error>Wybierz film</mat-error>
+    </mat-form-field>
+  </div>
+</form>
+<div class="save-cancel-button">
+  <button mat-raised-button color="primary" (click)="addSeance()">Zapisz</button>
+  <button mat-raised-button color="basic" (click)="cancel()">Anuluj</button>
+</div>

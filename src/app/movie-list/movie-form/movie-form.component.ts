@@ -13,7 +13,7 @@ import {takeUntil} from 'rxjs/operators';
 export class MovieFormComponent implements OnInit {
 
   @Input()
-  set user(movie: Movie) {
+  set movie(movie: Movie) {
     if (movie) {
       this.movieId = movie.id;
       this.updateForm(movie);
@@ -50,7 +50,7 @@ export class MovieFormComponent implements OnInit {
     this.movieForm = this.fb.group(
       {
         title: ['', Validators.required],
-        yearOfProduction: ['', Validators.required],
+        yearOfProduction: [''],
         duration: ['', Validators.required]
       }
     );
@@ -65,7 +65,7 @@ export class MovieFormComponent implements OnInit {
 
   prepareMovie(): Movie {
     return {
-      id: this.movieId, // TODO Check if OK
+      id: this.movieId,
       title: this.title.value,
       duration: this.duration.value,
       yearOfProduction: this.yearOfProduction.value

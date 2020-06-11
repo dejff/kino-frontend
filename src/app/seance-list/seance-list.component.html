@@ -1,1 +1,7 @@
 <h1>Seanse</h1>
+<div class="form-container">
+  <mat-expansion-panel [expanded]="editedSeance">
+    <mat-expansion-panel-header>Dodawanie seansu</mat-expansion-panel-header>
+    <app-seance-form [seance]="editedSeance"></app-seance-form>
+  </mat-expansion-panel>
+</div>

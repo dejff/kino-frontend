@@ -2,14 +2,14 @@
 <div class="form-container">
   <mat-expansion-panel [expanded]="editedMovie">
     <mat-expansion-panel-header>Dodawanie filmu</mat-expansion-panel-header>
-    <app-movie-form></app-movie-form>
+    <app-movie-form [movie]="editedMovie"></app-movie-form>
   </mat-expansion-panel>
 </div>
 <div class="main-table-container">
-<!--  <mat-form-field>-->
-<!--    <mat-label>Filtr</mat-label>-->
-<!--    <input matInput (keyup)="applyFilter($event)">-->
-<!--  </mat-form-field>q-->
+  <mat-form-field>
+    <mat-label>Filtr</mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
   <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Tytuł</th>
@@ -34,7 +34,7 @@
         </button>
         <mat-menu #itemMenu="matMenu">
           <button mat-menu-item (click)="removeElement(element)">Usuń</button>
-          <button mat-menu-item (click)="editElement(element)">Edytuj</button>
+          <button mat-menu-item (click)="editElement(element.id)">Edytuj</button>
         </mat-menu>
       </td>
     </ng-container>

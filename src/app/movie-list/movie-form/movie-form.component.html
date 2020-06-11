@@ -1,23 +1,23 @@
 <form [formGroup]="movieForm">
-<!--  <div class="from-inputs">-->
-<!--    <mat-form-field>-->
-<!--      <mat-label>Tytuł filmu</mat-label>-->
-<!--      <input type="text" formControlName="title" matInput>-->
-<!--      <mat-error>Wpisz tytuł filmu</mat-error>-->
-<!--    </mat-form-field>-->
-<!--  </div>-->
-<!--  <div class="names-fields">-->
-<!--    <mat-form-field>-->
-<!--      <mat-label>Czas trwania</mat-label>-->
-<!--      <input formControlName="duration" matInput>-->
-<!--      <mat-error>Wpisz czas trwania</mat-error>-->
-<!--    </mat-form-field>-->
-<!--    <mat-form-field>-->
-<!--      <mat-label>Rok produkcji</mat-label>-->
-<!--      <input formControlName="yearOfProduction" matInput>-->
-<!--      <mat-error>Wpisz rok produkcji</mat-error>-->
-<!--    </mat-form-field>-->
-<!--  </div>-->
+  <div class="form-inputs">
+    <mat-form-field>
+      <mat-label>Tytuł filmu</mat-label>
+      <input type="text" formControlName="title" matInput>
+      <mat-error>Wpisz tytuł filmu</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="names-fields">
+    <mat-form-field>
+      <mat-label>Czas trwania</mat-label>
+      <input formControlName="duration" matInput>
+      <mat-error>Wpisz czas trwania</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Rok produkcji</mat-label>
+      <input formControlName="yearOfProduction" matInput>
+      <mat-error>Wpisz rok produkcji</mat-error>
+    </mat-form-field>
+  </div>
 </form>
 <div class="save-cancel-button">
   <button mat-raised-button color="primary" (click)="addMovie()">Zapisz</button>

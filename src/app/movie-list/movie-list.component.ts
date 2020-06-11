@@ -14,7 +14,7 @@ export class MovieListComponent implements OnInit {
 
   dataSource: MatTableDataSource<Movie>;
   componentDestroyed$: Subject<boolean> = new Subject<boolean>();
-  displayedColumns = ['title', 'duration', 'yearOfProduction'];
+  displayedColumns = ['title', 'duration', 'yearOfProduction', 'options'];
   editedMovie: Movie;
 
   constructor(private movieService: MovieService) {
@@ -37,25 +37,27 @@ export class MovieListComponent implements OnInit {
     this.movieService.movieChanged$
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(
+        () => {
+          this.getMovies();
+        }
+      );
+  }
+
+  editElement(movie: Movie): void {
+    this.editedMovie = movie;
+  }
+
+  removeElement(movieId): void {
+    this.movieService.deleteMovie(movieId)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(
         () => this.getMovies()
       );
   }
 
-  addMovie(movie: Movie): void {
-    // TODO
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  editElement(movie: Movie): void {
-
-  }
-
-  removeElement(movieId): void {
-
-  }
-
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
 
 }

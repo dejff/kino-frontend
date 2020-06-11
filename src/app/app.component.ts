@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'kino-front';
+
+  navLinks = [
+    {path: '/movies', label: 'Filmy'},
+    {path: '/seances', label: 'Seanse'},
+    {path: '/reservations', label: 'Rezerwacje'}
+  ];
 }

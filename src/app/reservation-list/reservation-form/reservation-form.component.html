@@ -1,25 +1,34 @@
 <form [formGroup]="reservationForm">
-  <div class="from-inputs">
+  <div class="movie-input">
     <mat-form-field>
-      <mat-label>Tytuł filmu</mat-label>
-      <input type="text" formControlName="title" matInput>
-      <mat-error>Wpisz tytuł filmu</mat-error>
+      <mat-label>Seans</mat-label>
+      <mat-select formControlName="seance">
+        <mat-option *ngFor="let seance of availableSeances" [value]="seance">
+          {{seance.hourOfStart}} ({{seance.movie.title}})
+        </mat-option>
+      </mat-select>
+      <mat-error>Wybierz seans</mat-error>
     </mat-form-field>
   </div>
-  <div class="names-fields">
+  <div class="input-fields">
     <mat-form-field>
-      <mat-label>Czas trwania</mat-label>
-      <input formControlName="duration" matInput>
-      <mat-error>Wpisz czas trwania</mat-error>
+      <mat-label>Imię</mat-label>
+      <input formControlName="firstName" matInput>
+      <mat-error>Wpisz imię</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Rok produkcji</mat-label>
-      <input formControlName="yearOfProduction" matInput>
-      <mat-error>Wpisz rok produkcji</mat-error>
+      <mat-label>Nazwisko</mat-label>
+      <input formControlName="lastName" matInput>
+      <mat-error>Wpisz nazwisko</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ilość miejsc</mat-label>
+      <input formControlName="noOfPlaces" matInput>
+      <mat-error>Podaj ilość rezerwowanych miejsc</mat-error>
     </mat-form-field>
   </div>
-</form>1
+</form>
 <div class="save-cancel-button">
-  <button mat-raised-button color="primary" (click)="addMovie()">Zapisz</button>
+  <button mat-raised-button color="primary" (click)="addReservation()">Zapisz</button>
   <button mat-raised-button color="basic" (click)="cancel()">Anuluj</button>
 </div>
