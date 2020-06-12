@@ -82,6 +82,7 @@ export class MovieFormComponent implements OnInit {
           () => {
             this.movieForm.reset();
             this.movieService.updateOnMovieChanged();
+            this.movieId = null;
           }
         );
     }
@@ -90,6 +91,7 @@ export class MovieFormComponent implements OnInit {
   cancel(): void {
     this.movieForm.markAsUntouched({onlySelf: true});
     this.movieForm.reset();
+    this.movieId = null;
   }
 
   validateAllFields(formGroup: FormGroup) {
