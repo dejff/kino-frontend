@@ -1,45 +1,47 @@
 <h1>Filmy</h1>
 <div class="form-container">
   <mat-expansion-panel [expanded]="editedReservation">
-    <mat-expansion-panel-header>Dodawanie rezerwacji</mat-expansion-panel-header>
+    <mat-expansion-panel-header>{{editedReservation ? 'Edycja' : 'Dodawanie'}} rezerwacji</mat-expansion-panel-header>
     <app-reservation-form [reservation]="editedReservation"></app-reservation-form>
   </mat-expansion-panel>
 </div>
-<!--<div class="main-table-container">-->
-<!--  <mat-form-field>-->
-<!--    <mat-label>Filtr</mat-label>-->
-<!--    <input matInput (keyup)="applyFilter($event)">-->
-<!--  </mat-form-field>-->
-<!--  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">-->
-<!--    <ng-container matColumnDef="title">-->
-<!--      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tytuł</th>-->
-<!--      <td mat-cell *matCellDef="let element"> {{element.title}} </td>-->
-<!--    </ng-container>-->
+<div class="main-table-container">
+  <mat-form-field>
+    <mat-label>Filtr</mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="seanceTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data i godzina seansu</th>
+      <td mat-cell *matCellDef="let element"> {{element.seance.hourOfStart | date: 'yyyy-MM-dd HH:mm'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwisko</th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Imię</th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="numberOfPlaces">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ilość zarezerwowanych miejsc</th>
+      <td mat-cell *matCellDef="let element"> {{element.noOfPlaces}} </td>
+    </ng-container>
 
-<!--    <ng-container matColumnDef="duration">-->
-<!--      <th mat-header-cell *matHeaderCellDef mat-sort-header> Czas trwania (min)</th>-->
-<!--      <td mat-cell *matCellDef="let element"> {{element.duration}} </td>-->
-<!--    </ng-container>-->
+    <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #itemMenu="matMenu">
+          <button mat-menu-item (click)="removeElement(element.id)">Usuń</button>
+          <button mat-menu-item (click)="editElement(element)">Edytuj</button>
+        </mat-menu>
+      </td>
+    </ng-container>
 
-<!--    <ng-container matColumnDef="yearOfProduction">-->
-<!--      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rok produkcji</th>-->
-<!--      <td mat-cell *matCellDef="let element"> {{element.yearOfProduction}} </td>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container matColumnDef="options">-->
-<!--      <th mat-header-cell *matHeaderCellDef></th>-->
-<!--      <td mat-cell *matCellDef="let element">-->
-<!--        <button mat-icon-button [matMenuTriggerFor]="itemMenu">-->
-<!--          <mat-icon>more_vert</mat-icon>-->
-<!--        </button>-->
-<!--        <mat-menu #itemMenu="matMenu">-->
-<!--          <button mat-menu-item (click)="removeElement(element)">Usuń</button>-->
-<!--          <button mat-menu-item (click)="editElement(element.id)">Edytuj</button>-->
-<!--        </mat-menu>-->
-<!--      </td>-->
-<!--    </ng-container>-->
-
-<!--    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-<!--  </table>-->
-<!--</div>-->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

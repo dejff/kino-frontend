@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Reservation} from '../../reservation-list/reservation.model';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {SeanceService} from '../seance.service';
 import {Seance} from '../seance.model';
 import {MovieService} from '../../movie-list/movie.service';
 import {Movie} from '../../movie-list/movie.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-seance-form',
@@ -20,6 +20,7 @@ export class SeanceFormComponent implements OnInit {
     if (seance) {
       this.seanceId = seance.id;
       this.updateForm(seance);
+      this.cdRef.detectChanges();
       this.mode = 'edit';
     }
   }
@@ -32,7 +33,8 @@ export class SeanceFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private seanceService: SeanceService,
-              private movieService: MovieService) {
+              private movieService: MovieService,
+              private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class SeanceFormComponent implements OnInit {
 
   updateForm(seance: Seance): void {
     this.movie.patchValue(seance.movie);
-    this.hourOfStart.patchValue(seance.hourOfStart);
+    this.hourOfStart.patchValue(moment(seance.hourOfStart).format('YYYY-MM-DD hh:mm:ss'));
     this.noOfRoom.patchValue(seance.noOfRoom);
   }
 
@@ -80,14 +82,13 @@ export class SeanceFormComponent implements OnInit {
     return {
       id: this.seanceId,
       movie: this.movie.value,
-      hourOfStart: this.hourOfStart.value,
+      hourOfStart: moment(this.hourOfStart.value).format('YYYY-MM-DD HH:mm:ss'),
       noOfRoom: this.noOfRoom.value
     };
   }
 
   addSeance() {
     this.validateAllFields(this.seanceForm);
-    console.log(this.seanceForm);
     if (this.seanceForm.valid) {
       this.prepareSeance();
       this.seanceService.addSeance(this.prepareSeance())
@@ -115,6 +116,10 @@ export class SeanceFormComponent implements OnInit {
         this.validateAllFields(control);
       }
     });
+  }
+
+  getMovieTitle(movie: Movie): string {
+    return `Film ${movie.title} (${movie.yearOfProduction})`;
   }
 
 }

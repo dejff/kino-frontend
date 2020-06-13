@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Reservation } from './reservation.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Reservation} from './reservation.model';
 import {Observable, Subject} from 'rxjs';
-import { apiUrl } from 'src/environments/environment';
+import {apiUrl} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,8 @@ export class ReservationService {
     return this.httpClient.post<Reservation>(`${apiUrl}/reservations`, reservation);
   }
 
-  deleteReservation(reservationId: number): void {
-    this.httpClient.delete(`${apiUrl}/reservations/${reservationId}`);
+  deleteReservation(reservationId: number): Observable<{}> {
+    return this.httpClient.delete(`${apiUrl}/reservations/${reservationId}`);
   }
 
   updateOnReservationChanged(): void {

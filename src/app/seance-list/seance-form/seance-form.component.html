@@ -18,16 +18,19 @@
       </ngx-mat-datetime-picker>
     </mat-form-field>
   </div>
-  <div class="movie-input">
+  <div *ngIf="mode==='add'" class="movie-input">
     <mat-form-field>
       <mat-label>Film</mat-label>
       <mat-select formControlName="movie">
-        <mat-option *ngFor="let movie of availableMovies" [value]="movie">
-          {{movie.title}} ({{movie.yearOfProduction}})
+        <mat-option *ngFor="let selectedMovie of availableMovies" [value]="selectedMovie">
+          {{selectedMovie.title}} ({{selectedMovie.yearOfProduction}})
         </mat-option>
       </mat-select>
       <mat-error>Wybierz film</mat-error>
     </mat-form-field>
+  </div>
+  <div *ngIf="mode==='edit'">
+    {{getMovieTitle(movie.value)}}
   </div>
 </form>
 <div class="save-cancel-button">

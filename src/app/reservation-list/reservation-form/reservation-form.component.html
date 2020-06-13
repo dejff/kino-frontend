@@ -1,5 +1,5 @@
 <form [formGroup]="reservationForm">
-  <div class="movie-input">
+  <div class="seance-input" *ngIf="mode==='add'">
     <mat-form-field>
       <mat-label>Seans</mat-label>
       <mat-select formControlName="seance">
@@ -9,6 +9,17 @@
       </mat-select>
       <mat-error>Wybierz seans</mat-error>
     </mat-form-field>
+  </div>
+  <div *ngIf="mode==='edit'" class="seance-details">
+    <div class="movie-title">
+      Seans filmu: {{getMovieTitle(seance.value)}}
+    </div>
+    <div class="seance-date">
+      Data seansu: {{getSeanceDate(seance.value)}}
+    </div>
+    <div class="seance-hour">
+      Godzina seansu: {{getSeanceHour(seance.value)}}
+    </div>
   </div>
   <div class="input-fields">
     <mat-form-field>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Reservation} from './reservation.model';
 import {ReservationService} from './reservation.service';
 import {MatTableDataSource} from '@angular/material';
 import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-reservation-list',
@@ -16,9 +17,28 @@ export class ReservationListComponent implements OnInit {
   displayedColumns = ['seanceTime', 'lastName', 'firstName', 'numberOfPlaces', 'options'];
   editedReservation: Reservation;
 
-  constructor(private reservationService: ReservationService) { }
+  constructor(private reservationService: ReservationService) {
+  }
 
   ngOnInit() {
+    this.getReservations();
+    this.subscribeOnReservationsChanged();
+  }
+
+  getReservations(): void {
+    this.reservationService.getReservations()
+      .pipe()
+      .subscribe(
+        reservations => this.dataSource = new MatTableDataSource(reservations)
+      );
+  }
+
+  subscribeOnReservationsChanged(): void {
+    this.reservationService.reservationChanged$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(
+        () => this.getReservations()
+      );
   }
 
   editElement(reservation: Reservation): void {
@@ -26,7 +46,11 @@ export class ReservationListComponent implements OnInit {
   }
 
   removeElement(reservationId): void {
-    this.reservationService.deleteReservation(reservationId);
+    this.reservationService.deleteReservation(reservationId)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(
+        () => this.getReservations()
+      );
   }
 
   applyFilter(event: Event) {
