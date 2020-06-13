@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {Reservation} from '../reservation.model';
-import {take, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {ReservationService} from '../reservation.service';
-import {Movie} from '../../movie-list/movie.model';
 import {SeanceService} from '../../seance-list/seance.service';
 import {Seance} from '../../seance-list/seance.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-reservation-form',
@@ -111,6 +111,7 @@ export class ReservationFormComponent implements OnInit {
   cancel(): void {
     this.reservationForm.markAsUntouched({onlySelf: true});
     this.reservationForm.reset();
+    this.mode = 'add';
   }
 
   validateAllFields(formGroup: FormGroup) {
@@ -122,6 +123,18 @@ export class ReservationFormComponent implements OnInit {
         this.validateAllFields(control);
       }
     });
+  }
+
+  getMovieTitle(seance: Seance): string {
+    return seance.movie.title;
+  }
+
+  getSeanceDate(seance: Seance): string {
+    return moment(seance.hourOfStart).format('yyyy/MM/DD');
+  }
+
+  getSeanceHour(seance: Seance): string {
+    return moment(seance.hourOfStart).format('HH:mm');
   }
 
 }

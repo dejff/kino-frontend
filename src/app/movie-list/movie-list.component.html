@@ -1,7 +1,7 @@
 <h1>Filmy</h1>
 <div class="form-container">
   <mat-expansion-panel [expanded]="editedMovie">
-    <mat-expansion-panel-header>Dodawanie filmu</mat-expansion-panel-header>
+    <mat-expansion-panel-header>{{editedMovie ? 'Edycja' : 'Dodawanie'}} filmu</mat-expansion-panel-header>
     <app-movie-form [movie]="editedMovie"></app-movie-form>
   </mat-expansion-panel>
 </div>
